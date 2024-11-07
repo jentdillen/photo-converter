@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto Converter</title>
+</head>
+<body>
+    <h1>Foto Converter</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="files" multiple required>
+        <input type="text" name="width" placeholder="Breedte" required>
+        <input type="text" name="height" placeholder="Hoogte" required>
+        <button type="submit">Converteer Foto's</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
+    {% if converted_files %}
+        <h2>Geconverteerde Bestanden:</h2>
+        <ul>
+        {% for file in converted_files %}
+            <li><a href="{{ url_for('download_file', filename=file) }}">{{ file }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html> 
